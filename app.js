@@ -26,6 +26,7 @@ mongoose.connect(
 // set up view engine
 app.set("view engine", "ejs");
 
+// set up cookieSession
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
