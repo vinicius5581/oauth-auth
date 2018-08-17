@@ -15,14 +15,24 @@ passport.use(
       // passport callback function
       // console.log("passport callback function fired");
       // console.log(profile);
-      new User({
-        username: profile.displayName,
+      User.findOne({
         googleId: profile.id
-      })
-        .save()
-        .then(newUser => {
-          console.log("New user created: " + newUser);
-        });
+      }).then(currentUser => {
+        if (currentUser) {
+          // already have the user
+          console.log("User is: " + currentUser);
+        } else {
+          // if not, create user in our db
+          const user = new User({
+            username: profile.displayName,
+            googleId: profile.id
+          });
+
+          user.save().then(newUser => {
+            console.log("New user created: " + newUser);
+          });
+        }
+      });
     }
   )
 );
